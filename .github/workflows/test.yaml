@@ -1,0 +1,23 @@
+name: test
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  pull_request_target:
+    branches:
+      - main
+
+jobs:
+  android_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.after || github.event.pull_request.head.sha }}
+        
+      - name: Build
+        # working-directory: ./
+        run: |
+          ./test
